@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/hanna.css">
 <script type="text/javascript" src="js/myJavaScript.js"></script>
 </head>
 <body>
