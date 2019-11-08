@@ -15,6 +15,15 @@ public class BoardDao extends DAO {
 
 	public ArrayList<BoardDto> select() { // 전체 리스트
 		list = new ArrayList<BoardDto>();
+		dto = new BoardDto();
+		String sql = "select * from mvc_board";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		return list;
 	}
@@ -29,7 +38,20 @@ public class BoardDao extends DAO {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-
+			if(id != 0)  
+				pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dto = new BoardDto();
+				dto.setId(rs.getInt("bid"));
+				dto.setWriter(rs.getString("bname"));
+				dto.setTitle(rs.getNString("btitle"));
+				dto.setContents(rs.getString("bcontent"));
+				dto.setwDate(rs.getDate("bdate"));
+				dto.setHit(rs.getInt("bhit"));
+				list.add(dto);
+				
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

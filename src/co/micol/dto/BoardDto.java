@@ -5,6 +5,7 @@ import java.sql.Date;
 public class BoardDto {
 	private int id;
 	private String writer;
+	private String title;
 	private String contents;
 	private Date wDate;
 	private int hit;
@@ -18,6 +19,14 @@ public class BoardDto {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setId(int id) {

@@ -11,7 +11,7 @@
 <body>
 	<div align="center">
 	<div><jsp:include page="topmenu.jsp"></jsp:include></div>
-	
+	<br />
 	<div>
 		<c:if test="${id == null }">
 			<br />
