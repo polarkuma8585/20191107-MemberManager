@@ -47,7 +47,25 @@ public class MemberDao extends DAO {
 
 	public MemberDto select(String id) { // 1명의 회원정보 가져오기
 		dto = new MemberDto();
-
+		String sql ="select * from member where member_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setId(rs.getString("member_id"));
+				dto.setPassword(rs.getString("member_pw"));
+				dto.setName(rs.getString("member_name"));
+				dto.setAddr(rs.getString("member_address"));
+				dto.setGrant(rs.getString("member_grant"));
+				dto.setTel(rs.getString("member_tell"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		close();
 		return dto;
 	}
@@ -79,14 +97,40 @@ public class MemberDao extends DAO {
 
 	public int delete(String id) {
 		int n = 0;
-
+		String sql ="delete from member where member_id= ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			n = pstmt.executeUpdate();
+			
+			System.out.println(id +"님의 회원탈퇴가 완료되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		close();
 		return n;
 	}
 
 	public int update(MemberDto dto) {
 		int n = 0;
-
+		String sql ="update member set "
+				+ "member_name = ?, member_pw =?, member_address = ?, member_tell=? where member_id =?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getPassword());
+			pstmt.setString(3, dto.getAddr());
+			pstmt.setString(4, dto.getTel());
+			pstmt.setString(5, dto.getId());
+			n = pstmt.executeUpdate();
+			
+			System.out.println(dto.getId() + " 님의 개인정보가 수정 되었습니다.");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		close();
 		return n;
 	}

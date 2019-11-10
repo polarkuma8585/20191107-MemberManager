@@ -32,21 +32,27 @@ public class noticeDao extends DAO {
 				
 			}
 			
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		viewCountUpdate(id);	
+		close();
 		return dto;
 	}
+	
+	private void viewCountUpdate(int id) { // 조회수 증가 (타 클래스에서 쓸 수 없게 private 으로.)
+		String sql = "update notice set nhit = nhit + 1 where nid = " + id;
 
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			System.out.println(id + " 번 글의 조회수 1 증가");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 close();
+	}
+		
 	public ArrayList<noticeDto> select() { // 전체 리스트
 		list = new ArrayList<noticeDto>();  
 		dto = new noticeDto();
@@ -68,7 +74,7 @@ public class noticeDao extends DAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		 close();
 		return list;
 
 	}
@@ -87,19 +93,44 @@ public class noticeDao extends DAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		 close();
 		return n;
 	}
 
 	public int update(noticeDto dto) {
 		int n = 0;
-
+		String sql = "update notice set ntitle=?, ncontents=?, ndate=sysdate where nid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContents());
+			pstmt.setInt(3, dto.getId());
+			n = pstmt.executeUpdate();
+			
+			System.out.println(dto.getId()+" 번의 공지사항이 수정되었습니다.");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 close();
 		return n;
 	}
 
 	public int delete(int id) {
 		int n = 0;
-
+		String sql = "delete from notice where nid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			n = pstmt.executeUpdate();
+			
+			System.out.println(id + " 번의 공지사항이 삭제 되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 close();
 		return n;
 	}
  

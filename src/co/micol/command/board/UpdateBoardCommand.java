@@ -1,4 +1,4 @@
-package co.micol.command.notice;
+package co.micol.command.board;
 
 import java.io.IOException;
 
@@ -8,23 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.micol.common.Command;
-import co.micol.dao.noticeDao;
-import co.micol.dto.noticeDto;
+import co.micol.dao.BoardDao;
+import co.micol.dto.BoardDto;
 
-public class NoticeViewCommand implements Command {
+public class UpdateBoardCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		noticeDao dao = new noticeDao();
-		noticeDto dto = new noticeDto();
-		int id = Integer.parseInt(request.getParameter("id"));
+		BoardDao dao = new BoardDao();
+		BoardDto dto = new BoardDto();
 		
-		dto = dao.select(id);
+		dto = dao.selectForUpdate(Integer.parseInt(request.getParameter("id")));
 		
 		request.setAttribute("dto", dto);
 		
-		String path ="view/noticeView.jsp";
+		String path="view/updateBoard.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
 		

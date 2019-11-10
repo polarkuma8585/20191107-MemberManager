@@ -11,23 +11,28 @@ import co.micol.common.Command;
 import co.micol.dao.noticeDao;
 import co.micol.dto.noticeDto;
 
-public class NoticeViewCommand implements Command {
+public class UpdateNoticeOkCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		noticeDao dao = new noticeDao();
 		noticeDto dto = new noticeDto();
-		int id = Integer.parseInt(request.getParameter("id"));
-		
-		dto = dao.select(id);
-		
-		request.setAttribute("dto", dto);
-		
-		String path ="view/noticeView.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-		dispatcher.forward(request, response);
-		
+
+		dto.setId(Integer.parseInt(request.getParameter("id")));
+		dto.setTitle(request.getParameter("title"));
+		dto.setContents(request.getParameter("contents"));
+
+		int n = dao.update(dto);
+
+		String path;
+		if (n != 0) {
+			response.sendRedirect("noticeList.do");
+		} else {
+			path = "updateNoticeOk.do";
+			RequestDispatcher dispathcer = request.getRequestDispatcher(path);
+			dispathcer.forward(request, response);
+		}
+
 	}
 
 }

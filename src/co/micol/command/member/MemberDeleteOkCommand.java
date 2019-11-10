@@ -1,4 +1,4 @@
-package co.micol.command.notice;
+package co.micol.command.member;
 
 import java.io.IOException;
 
@@ -6,28 +6,31 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.micol.common.Command;
-import co.micol.dao.noticeDao;
-import co.micol.dto.noticeDto;
+import co.micol.dao.MemberDao;
 
-public class NoticeViewCommand implements Command {
+public class MemberDeleteOkCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		noticeDao dao = new noticeDao();
-		noticeDto dto = new noticeDto();
-		int id = Integer.parseInt(request.getParameter("id"));
+		MemberDao dao = new MemberDao();
+		HttpSession httpsession = request.getSession();
+		String id = (String) httpsession.getAttribute("id");
+		request.setAttribute("id", id);
 		
-		dto = dao.select(id);
+		dao.delete(id);
 		
-		request.setAttribute("dto", dto);
+		httpsession.removeAttribute("id");
+		httpsession.removeAttribute("grant");
 		
-		String path ="view/noticeView.jsp";
+		
+		
+		String path="view/memberDeleteOk.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		dispatcher.forward(request, response);
-		
+
 	}
 
 }

@@ -19,32 +19,33 @@
 				<li>|</li>
 				<c:if test="${id != null}">
 					<li class="topMenuLi"><a class="menuLink" href="noticeList.do">공지사항</a> 
-					<c:if test="${grant == 'S' }">
-							<ul class="submenu">
-								<li><a href="insertNotice.do" class="submenuLink">글 등록</a></li>
-								<li class="subli">|</li>
-								<li><a href="#" class="submenuLink">글 수정</a></li>
-								<li class="subli">|</li>
-								<li><a href="#" class="submenuLink">글 삭제</a></li>
-							</ul>
-						</c:if></li>
+					
 					<li>|</li>
 				</c:if>
 
-				<li class="topMenuLi"><a class="menuLink" href="#">자유게시판</a>
+				<li class="topMenuLi"><a class="menuLink" href="boardList.do">자유게시판</a>
 					</li>
 				<li>|</li>
-				<li class="topMenuLi"><a class="menuLink" href="#">회원가입</a>
-				
+				<li class="topMenuLi"><a class="menuLink" href="#">
+				<c:if test="${id == null }">
+				회원가입
+				</c:if>
+				<c:if test="${grant == 'U' }">
+				내 정보
+				</c:if>
+				<c:if test="${grant == 'S' }">
+				회원 정보 관리
+				</c:if>
+				</a>
 					<ul class="submenu">
 						<c:choose>
 						<c:when test="${grant == 'S' }">
 							<li><a href="memberList.do" class="submenuLink">회원목록보기</a></li>
 						</c:when>
 							<c:when test="${grant == 'U' }">
-								<li><a href="#" class="submenuLink">정보수정</a></li>
+								<li><a href="memberUpdate.do" class="submenuLink">정보수정</a></li>
 								<li class="subli">|</li>
-								<li><a href="#" class="submenuLink">회원 탈퇴</a></li>
+								<li><a href="memberDelete.do" class="submenuLink">회원 탈퇴</a></li>
 							</c:when>
 						<c:otherwise>
 							<li><a href="memberInput.do" class="submenuLink">회원등록</a></li>

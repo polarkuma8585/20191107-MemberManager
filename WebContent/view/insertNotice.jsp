@@ -20,13 +20,13 @@
 					<table cellpadding="5px">
 						<tr>
 							<th width="70">제목</th>
-							<td><input style="border:none; width:450px" type="text" id="title" name="title"></td>
+							<td style="background:#fcd14f;"><input style="border:none; width:460px" type="text" id="title" name="title"></td>
 							<th width="70">작성자</th>
 							<td><input style="border:none;" type="text" id="writer" name="writer" value="관리자" readonly></td>
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td colspan="3"><textarea style="resize:none; width:700px ;height: 500px;" id="contents" name="contents" cols="20" rows="30"></textarea></td>
+							<td style="background:#fcd14f;" colspan="3" ><textarea style="border:none; resize:none; width:700px ;height: 500px;" id="contents" name="contents" cols="20" rows="30"></textarea></td>
 						</tr>
 					</table>
 					<div>

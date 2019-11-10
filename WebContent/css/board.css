@@ -59,6 +59,13 @@ button:hover{
 	border-right: 3px solid #c99703;
 }*/
 
+.replyinput {
+	border:none; 
+	background:#4285F4;
+	color: white;
+	padding: 10px;
+}
+
 .input, button{
 	background: #EA4335;
 	border: 1px solid #a21d11;
