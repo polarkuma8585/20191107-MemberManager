@@ -21,6 +21,7 @@ public class BoardViewCommand implements Command {
 		BoardDao dao = new BoardDao();
 		//BoardDto dto = new BoardDto();
 		HttpSession session = request.getSession();
+		
 		String writer = (String)session.getAttribute("id");
 		
 		list = dao.select(Integer.parseInt(request.getParameter("id")));

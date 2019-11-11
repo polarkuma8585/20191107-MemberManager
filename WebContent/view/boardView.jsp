@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>BoardView</title>
 <link rel="stylesheet" href="css/board.css">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 </head>
 <body>
 	<div align="center">
@@ -35,22 +37,29 @@
 				</tr>
 				</c:if>
 				<c:forEach var="i" begin="1" end="${length -1 }">
-				<tr>
-					<td align="center" style="background:#b7d1fb;" width="70">
-					${list[i].writer }
-					</td>
-					<td style="background: #e7f0fe;" colspan="2">${list[i].contents }
-					<!-- <input type="text" style="border:none;" id="replyContents" name="replyContents" value="${list[i].contents }" readonly>
-					<input type="text" style="border:none; display:none;" id="replyUpdate" name="replyUpdate" value="${list[i].contents }"> -->
-					</td>
-					<td style="background:#e7f0fe;">
-						<c:if test="${list[i].writer == writer }">
-						<button type="button" onclick="updateReplyOn()">수정</button>&nbsp;&nbsp; <!--  미완성 -->
-						<button type="button" onclick="deleteReply()">삭제</button>
+				
+				<tr id="${list[i].id }">
+				
+					<td align="center" style="background:#b7d1fb;" width="70" colspan="4">
+					${list[i].writer } 
+					<input type="hidden" id="replyid" name="replyid" value="">
+					<!-- </td> -->
+					<!-- <td style="background: #e7f0fe;" colspan="3">${list[i].contents } --> 
+					<input type="text" class="replyUpdateInput" id="replyContents" name="replyContents" value="${list[i].contents }" readonly>
+					
+					<input type="text" class="replyUpdateInput2" id="replyUpdate" name="replyUpdate" placeholder="${list[i].contents }">&nbsp;&nbsp;
+					<button type="button" onclick="replyAction(1)" style="display:none;" id="replyUpdate_btn" name="replyUpdate_btn">등록</button>&nbsp;&nbsp;
+					
+					<!-- <td style="background:#e7f0fe;"> -->
+						<c:if test="${list[i].userId == writer }">
+						
+						<button type="button" onclick="replyAction(2)" id="replyUp" name="replyUp">수정</button>&nbsp;&nbsp; <!--  미완성 -->
+						<button type="button" onclick="replyAction(3)" id="replyDel" name="replyDel">삭제</button> <!-- 미완성 -->
 						</c:if>
+					<!-- </td>  -->
 					</td>
 				</tr>
-				<input type="hidden" id="replyid" name="replyid" value="${list[i].id }">
+				
 				</c:forEach>
 				<c:if test="${id != null }">
 				<tr>
@@ -61,7 +70,7 @@
 					<textarea id="reply" name="reply" style="resize:none; border:none; width:760px; height:50px" cols="100" rows="5"></textarea>
 					</td>
 					<!--  <td align="center" style="background:#4285F4; color:white; cursor:pointer;" onclick="return replyCheck()"> -->
-					<td style="background:#4285F4" align="center">
+					<td style="background:#4285F4;" align="center">
 					<input class="replyinput" type="submit" value="등록">
 					</td>
 				</tr>
@@ -70,7 +79,7 @@
 			</div>
 			<div>
 			<br />
-				<c:if test="${list[0].writer == writer }">
+				<c:if test="${list[0].userId == writer }">
 				<button type="button" onclick="updateBoard()">수정</button>&nbsp;&nbsp;
 				<button type="button" onclick="deleteBoard()">삭제</button>&nbsp;&nbsp;
 				</c:if>

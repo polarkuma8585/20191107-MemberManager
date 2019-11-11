@@ -18,7 +18,7 @@ public class ReplyDeleteCommnad implements Command {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		int bid = Integer.parseInt((request.getParameter("replyid")));
-		
+		System.out.println(bid);
 		dao.deleteReply(bid);
 		
 		String path="boardView.do";

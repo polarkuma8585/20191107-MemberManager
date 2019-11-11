@@ -18,6 +18,7 @@ import co.micol.command.board.InsertBoardCommand;
 import co.micol.command.board.InsertBoardOkCommand;
 import co.micol.command.board.ReplyDeleteCommnad;
 import co.micol.command.board.ReplyInsertCommand;
+import co.micol.command.board.ReplyUdateCommand;
 import co.micol.command.board.UpdateBoardCommand;
 import co.micol.command.board.UpdateBoardOkCommand;
 import co.micol.command.member.IdCheckCommand;
@@ -78,6 +79,7 @@ public class NewFrontController extends HttpServlet {
 		cont.put("/boardList.do", new BoardListCommand()); // 자유게시판 리스트
 		cont.put("/boardView.do", new BoardViewCommand()); // 자유게시판 상세 보기
 		cont.put("/replyInsert.do", new ReplyInsertCommand()); // 자유게시판 댓글 등록
+		cont.put("/replyUpdate.do", new ReplyUdateCommand()); //자유게시판 댓글 수정
 		cont.put("/replyDelete.do", new ReplyDeleteCommnad()); // 자유게시판 댓글 삭제
 		cont.put("/insertBoard.do", new InsertBoardCommand()); // 자유게시판 글 등록 창
 		cont.put("/insertBoardOk.do", new InsertBoardOkCommand()); // 자유게시판 글 등록 실행

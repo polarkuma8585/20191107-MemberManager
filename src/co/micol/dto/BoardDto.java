@@ -12,6 +12,15 @@ public class BoardDto {
 	private int group;
 	private int step;
 	private int indent;
+	private String userId;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public BoardDto() {
 		super();

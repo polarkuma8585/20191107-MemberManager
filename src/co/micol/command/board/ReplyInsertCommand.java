@@ -21,6 +21,7 @@ public class ReplyInsertCommand implements Command {
 		HttpSession httpsession = request.getSession(); 
 		
 		int id = Integer.parseInt(request.getParameter("id"));
+		
 		String writer = (String)httpsession.getAttribute("id");
 		System.out.println(id);
 		System.out.println(writer);
@@ -28,6 +29,7 @@ public class ReplyInsertCommand implements Command {
 		dto.setGroup(id);
 		dto.setContents(request.getParameter("reply"));
 		dto.setWriter(writer);
+		dto.setUserId(writer);
 		
 		int n  = 0;
 		n = dao.insertReply(dto);

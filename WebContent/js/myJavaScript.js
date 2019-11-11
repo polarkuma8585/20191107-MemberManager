@@ -52,16 +52,16 @@ function memberUpdateFormCheck(){
 		frm.pw.focus();
 		return false;
 	}
-//	if (frm.pwChk.value == "") {
-//		alert("패스워드 확인창을 입력해주세요.");
-//		frm.pwChk.focus();
-//		return false;
-//	}
-//	if (frm.pw.value != frm.pwChk.value) {
-//		alert("패스워드가 일치하지 않습니다. 다시 확인해 주세요.");
-//		frm.pwChk.focus();
-//		return false;
-//	}
+	if (frm.pwChk.value == "") {
+		alert("패스워드 확인란을 입력해주세요.");
+		frm.pwChk.focus();
+		return false;
+	}
+	if (frm.pw.value != frm.pwChk.value) {
+		alert("패스워드가 일치하지 않습니다. 다시 확인해 주세요.");
+		frm.pwChk.focus();
+		return false;
+	}
 	if (frm.tel.value == "") {
 		alert("연락처를 입력해주세요.")
 		frm.tel.focus();
@@ -76,9 +76,7 @@ function idCheck(id) {
 		alert("아이디를 입력해주세요.");
 		frm.id.focus();
 	} else {
-		window
-				.open("idCheck.do?id=" + id, "",
-						"width=500, height=400, left=50");
+		window.open("idCheck.do?id=" + id, "", "width=500, height=400, left=50");
 	}
 }
 function noticeFormCheck() {
@@ -116,22 +114,24 @@ function del_btn(n) {
 	}
 }
 
-function updateReply() {
-	frm.action = "replyUpdate.do";
-	frm.submit();
+function replyAction(n) {
+	if(n == 1){
+		frm.action = "replyUpdate.do";
+		frm.submit();
+	}
+	if(n == 2){
+		document.getElementById("replyContents").style.display = "none";
+		document.getElementById("replyUpdate").style.display = "inline";
+		document.getElementById("replyUpdate_btn").style.display = "inline";
+		
+	}
+	if(n == 3){
+		frm.action= "replyDelete.do";
+		frm.submit();
+	}
 }
 
-//function updateReplyOn(){
-//	frm.replyContents.display= "none";
-//	document.getElementById("replyContents").style.display = "none";
-//	//frm.replyUpdate.display= "block";
-//	document.getElementById("replyUpdate").style.display = "block";
-//}
 
-function deleteReply() {
-	frm.action = "replyDelete.do";
-	frm.submit();
-}
 
 function replyCheck() {
 	if (frm.reply.value == "") {

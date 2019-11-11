@@ -25,6 +25,9 @@
 						<button type="button" onclick="pwUpdate()">변경</button></td><!-- pw변경 버튼 미완성 -->
 					</tr>
 					<tr>
+						<th>*패스워드 확인</th><td style="background:#FBBC05;"><input style="border:none;" type="password" id="pwChk" name="pwChk" value="${dto.password }"></td>
+					</tr>
+					<tr>
 						<th>*이름</th><td style="background:#FBBC05;" ><input style="border:none;" type="text" id="name" name="name" value="${dto.name }"></td>
 					</tr>
 					<tr>

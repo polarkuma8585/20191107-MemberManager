@@ -27,7 +27,7 @@
 						<br />
 						<form id="frm" name="frm" action="" method="post">
 							<input type="hidden" id="id" name="id">
-						<table>
+						<table cellpadding="5px">
 							<tr>
 								<th>순번</th>
 								<th>제목</th>

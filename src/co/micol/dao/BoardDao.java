@@ -16,7 +16,7 @@ public class BoardDao extends DAO {
 	public ArrayList<BoardDto> select() { // 전체 리스트
 		list = new ArrayList<BoardDto>();
 		dto = new BoardDto();
-		String sql = "select * from mvc_board where btitle != '[댓글]'";
+		String sql = "select * from mvc_board where btitle != '[댓글]' order by bid desc";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class BoardDao extends DAO {
 		list = new ArrayList<BoardDto>();
 		dto = new BoardDto();
 
-		String sql = "select * from mvc_board where bgroup = ?";
+		String sql = "select * from mvc_board where bgroup = ? order by bid";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, id);
@@ -57,6 +57,7 @@ public class BoardDao extends DAO {
 				dto.setHit(rs.getInt("bhit"));
 				dto.setIndent(rs.getInt("bindent"));
 				dto.setStep(rs.getInt("bstep"));
+				dto.setUserId(rs.getString("userid"));
 				list.add(dto);
 			}
 		} catch (SQLException e1) {
@@ -90,13 +91,14 @@ public class BoardDao extends DAO {
 	}
 	public int insert(BoardDto dto) {
 		int n = 0;
-		String sql ="insert into mvc_board (bid, bname, btitle, bcontent, bdate, bhit, bgroup, bstep, bindent)" + 
-				" values(b_num.nextval, ?, ?, ?, sysdate, 0, b_num.currval, 0, 0)";
+		String sql ="insert into mvc_board (bid, bname, btitle, bcontent, bdate, bhit, bgroup, bstep, bindent,userid)" + 
+				" values(b_num.nextval, ?, ?, ?, sysdate, 0, b_num.currval, 0, 0,?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getTitle());
 			pstmt.setString(3, dto.getContents());
+			pstmt.setString(4, dto.getWriter());
 			n = pstmt.executeUpdate();
 			System.out.println(dto.getWriter()+" 님의 게시글이 자유게시판에 " + n + "건 추가되었습니다.");
 		} catch (SQLException e) {
@@ -108,14 +110,15 @@ public class BoardDao extends DAO {
 
 	public int insertReply(BoardDto dto) {
 		int n = 0;
-		String sql = "insert into mvc_board (bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent) "
-				+ "values(b_num.nextval,?,'[댓글]',?,sysdate,0,?,1,0)";
+		String sql = "insert into mvc_board (bid,bname,btitle,bcontent,bdate,bhit,bgroup,bstep,bindent,userid) "
+				+ "values(b_num.nextval,?,'[댓글]',?,sysdate,0,?,1,0,?)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getContents());
 			pstmt.setInt(3, dto.getGroup());
+			pstmt.setString(4, dto.getUserId());
 			n = pstmt.executeUpdate();
 
 			System.out.println(dto.getGroup() + " 번 글에 " + n + "건의 댓글이 추가되었습니다.");
@@ -145,7 +148,24 @@ public class BoardDao extends DAO {
 		close();
 		return n;
 	}
-
+	public int replyUpdate(BoardDto dto) {
+		int n = 0;
+		String sql="update mvc_board set bcontent =? where bid=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getContents());
+			pstmt.setInt(2, dto.getId());
+			
+			n = pstmt.executeUpdate();
+			
+			System.out.println("댓글이 "+ n +"건 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close();
+		return n;
+	}
 	public int delete(int id) {
 		int n = 0;
 		String sql = "delete from mvc_board where bid = ?";
